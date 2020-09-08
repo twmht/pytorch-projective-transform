@@ -2,12 +2,20 @@ from setuptools import setup
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 
 setup(
-    name='lltm_cuda',
+    name='stn_cuda',
     ext_modules=[
-        CUDAExtension('lltm_cuda', [
-            'lltm_cuda.cpp',
-            'lltm_cuda_kernel.cu',
-        ]),
+        CUDAExtension('stn_cuda', [
+            'stn_cuda.cpp',
+            'stn_cuda_kernel.cu',
+        ],
+            libraries=[
+                'glog'
+            ],
+            extra_compile_args={
+                'cxx': ['-g'],
+                'nvcc': ['-G']
+            }
+        ),
     ],
     cmdclass={
         'build_ext': BuildExtension
